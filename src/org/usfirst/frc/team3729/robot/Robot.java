@@ -2,13 +2,9 @@
 package org.usfirst.frc.team3729.robot;
 
 import org.usfirst.frc.team3729.robot.commands.XboxControler;
-import org.usfirst.frc.team3729.robot.commands.mechenumDrive;
 import org.usfirst.frc.team3729.robot.commands.robotDrive;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -24,7 +20,6 @@ public class Robot extends IterativeRobot {
 	//SendableChooser chooser;
 	robotDrive drive;
 	XboxControler xbox;
-	mechenumDrive strafe;
 	// USBCamera cam;
 
 	/**
@@ -39,7 +34,6 @@ public class Robot extends IterativeRobot {
 		//SmartDashboard.putData("Auto choices", chooser);
 		xbox = new XboxControler(0);
 		drive = new robotDrive(xbox);
-		strafe = new mechenumDrive(xbox);
 		// cam = new USBCamera();
 
 	}
@@ -92,7 +86,7 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 
 		drive.arcadeDrive();
-		//strafe.mechenumDrive();
+		drive.mechenumDrive();
 
 	}
 
