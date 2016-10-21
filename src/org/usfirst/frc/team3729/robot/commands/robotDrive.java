@@ -62,7 +62,7 @@ public class robotDrive {
 		} else if (forwardInput < -deadZone && turnInput < -deadZone) {
 			leftMotorInput = turnInput * .25;
 			rightMotorInput = forwardInput;
-			System.out.println("turn backwards left"); 
+			System.out.println("turn backwards left");
 			// Turn Backwards Left
 		} else if (forwardInput < -deadZone && turnInput > deadZone) {
 			leftMotorInput = forwardInput;
@@ -86,5 +86,28 @@ public class robotDrive {
 		LeftMotor2.set(leftMotorInput * motorLimiterRatio);
 		// System.out.println(leftMotorInput + "left");
 		// System.out.println(rightMotorInput + "right");
+	}
+
+	public void mechenumDrive() {
+		boolean leftInput = _xbox.GetLeftBumper();
+		boolean rightInput = _xbox.GetRightBumper();
+
+		if (leftInput == true) {	//Test to finish mech Drive. Git Good!!! Lel
+			RightMotor1.set(0.5);
+			RightMotor2.set(0.5);
+			LeftMotor1.set(-0.5);
+			LeftMotor2.set(-0.5);
+		} else if (rightInput == true) {
+			RightMotor1.set(-0.5);
+			RightMotor2.set(-0.5);
+			LeftMotor1.set(0.5);
+			LeftMotor2.set(0.5);
+		} else {
+			RightMotor1.set(0);
+			RightMotor2.set(0);
+			LeftMotor1.set(0);
+			LeftMotor2.set(0);
+		}
+
 	}
 }

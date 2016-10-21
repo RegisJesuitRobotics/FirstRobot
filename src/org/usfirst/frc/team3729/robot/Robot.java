@@ -2,13 +2,9 @@
 package org.usfirst.frc.team3729.robot;
 
 import org.usfirst.frc.team3729.robot.commands.XboxControler;
-import org.usfirst.frc.team3729.robot.commands.mechenumDrive;
 import org.usfirst.frc.team3729.robot.commands.robotDrive;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -18,13 +14,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	//final String defaultAuto = "Default";
-	//final String customAuto = "My Auto";
-	//String autoSelected;
-	//SendableChooser chooser;
+	// final String defaultAuto = "Default";
+	// final String customAuto = "My Auto";
+	// String autoSelected;
+	// SendableChooser chooser;
 	robotDrive drive;
 	XboxControler xbox;
-	mechenumDrive strafe;
 	// USBCamera cam;
 
 	/**
@@ -33,13 +28,12 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
-		//chooser = new SendableChooser();
-		//chooser.addDefault("Default Auto", defaultAuto);
-		//chooser.addObject("My Auto", customAuto);
-		//SmartDashboard.putData("Auto choices", chooser);
+		// chooser = new SendableChooser();
+		// chooser.addDefault("Default Auto", defaultAuto);
+		// chooser.addObject("My Auto", customAuto);
+		// SmartDashboard.putData("Auto choices", chooser);
 		xbox = new XboxControler(0);
 		drive = new robotDrive(xbox);
-		strafe = new mechenumDrive(xbox);
 		// cam = new USBCamera();
 
 	}
@@ -57,10 +51,10 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		//autoSelected = (String) chooser.getSelected();
+		// autoSelected = (String) chooser.getSelected();
 		// autoSelected = SmartDashboard.getString("Auto Selector",
 		// defaultAuto);
-		//System.out.println("Auto selected: " + autoSelected);
+		// System.out.println("Auto selected: " + autoSelected);
 	}
 
 	/**
@@ -68,22 +62,22 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		//switch (autoSelected) {
-		//case customAuto:
-			// Put custom auto code here
-//			break;
-//		case defaultAuto:
-//		default:
-//			Talon RightMotor, LeftMotor;
-//
-//			RightMotor = new Talon(1);
-//			LeftMotor = new Talon(2);
-//
-//			RightMotor.set(.5);
-//			LeftMotor.set(.5);
-//			break;
-		//}
-}
+		// switch (autoSelected) {
+		// case customAuto:
+		// Put custom auto code here
+		// break;
+		// case defaultAuto:
+		// default:
+		// Talon RightMotor, LeftMotor;
+		//
+		// RightMotor = new Talon(1);
+		// LeftMotor = new Talon(2);
+		//
+		// RightMotor.set(.5);
+		// LeftMotor.set(.5);
+		// break;
+		// }
+	}
 
 	/**
 	 * This function is called periodically during operator control
@@ -92,7 +86,7 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 
 		drive.arcadeDrive();
-		//strafe.mechenumDrive();
+		drive.mechenumDrive();
 
 	}
 
