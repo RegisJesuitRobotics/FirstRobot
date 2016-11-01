@@ -1,11 +1,13 @@
-package org.usfirst.frc.team3279.robot;
+package org.usfirst.frc.team3729.robot;
 
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.InterruptHandlerFunction;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -26,12 +28,15 @@ public class Robot extends IterativeRobot {
 	int runtimes = 0;
 	int bart = 0;
 	public SpeedController motor;
-
-	/**
-	 * This function is run when the robot is first started up and should be
+	public Potentiometer pot;
+	
+//plz do gud 
+	/**be
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
+		pot = new AnalogPotentiometer(4,1,0);
+		
 		upSensor = new DigitalInput(8);
 		upSensor.requestInterrupts(new InterruptHandlerFunction() {
 
@@ -39,12 +44,15 @@ public class Robot extends IterativeRobot {
 			public void interruptFired(int interruptAssertedMask, Object param) {
 				System.out.println("upSensorInterput " + interruptAssertedMask + " prarams " + param);
 				goUp = upSensor.get();
-				motorSpeed *= -1;
+				if (motorSpeed > 0)
+					motorSpeed *= -1;
+				motor.set(motorSpeed);
 				System.out.println("upSensorInterput  countUp " + goUp + " motorSpeed " + motorSpeed);
 				
 			}
 			
 		});
+		upSensor.enableInterrupts();
 		downSensor = new DigitalInput(3);
 		downSensor.requestInterrupts(new InterruptHandlerFunction() {
 
@@ -52,12 +60,15 @@ public class Robot extends IterativeRobot {
 			public void interruptFired(int interruptAssertedMask, Object param) {
 				System.out.println("downSensorInterput " + interruptAssertedMask + " prarams " + param);
 				goDown = downSensor.get();
-				motorSpeed *= -1;
+				if (motorSpeed < 0)
+					motorSpeed *= -1;
+				motor.set(motorSpeed);
 				System.out.println("downSensorInterput  countDown " + goDown + " motorSpeed " + motorSpeed);
 				
 			}
 			
 		});
+		downSensor.enableInterrupts();
 		motor = new Talon(4); // initialize the motor as a Talon on channel 0
 
 	}
@@ -93,13 +104,7 @@ public class Robot extends IterativeRobot {
 		// goDown = downSensor.get();
 		try {
 			motor.set(motorSpeed);
-//			//while (countDown && !countUp) {
-//			goUp();
-//			//}
-//			
-//		//	while (countUp && !countDown) {
-//			goDown();
-		//	}
+			System.out.println("Pot value =" + pot.get());
 		} catch (RuntimeException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -108,38 +113,5 @@ public class Robot extends IterativeRobot {
 		Timer.delay(50);
 	}
 
-	public void goUp() throws RuntimeException {
-		System.out.println("in goUp: countDown " + goDown + " countUp " + goUp);
-		
-		goUp = upSensor.get();
-		while (goUp && goDown) {
-			
-			goUp = upSensor.get();
-			goDown = downSensor.get();
-			System.out.println("in goUp: countDown " + goDown + " countUp " + goUp);
-			motor.set(0.4);
-		}
-		motor.set(0);
-		if (goUp) {
-			throw new RuntimeException("wrong input triggered for goUp");
-		}
-		goUp = true;
-	}
 
-	public void goDown() throws RuntimeException {
-		System.out.println("in goDown: countDown " + goDown + " countUp " + goUp);
-		
-		goDown = downSensor.get();
-		while (goUp && goDown ) {
-			goUp = upSensor.get();
-			goDown = downSensor.get();
-			System.out.println("in goDown: countDown " + goDown + " countUp " + goUp);
-			motor.set(-0.4);
-		}
-		motor.set(0);
-		if (goDown) {
-			throw new RuntimeException("wrong input triggered for countDown");
-		}
-		goDown = true;
-	}
 }
