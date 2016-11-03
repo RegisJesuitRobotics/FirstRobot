@@ -35,7 +35,7 @@ public class Robot extends IterativeRobot {
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
-		pot = new AnalogPotentiometer(4,1,0);
+		pot = new AnalogPotentiometer(0,1,0);
 		
 		upSensor = new DigitalInput(8);
 		upSensor.requestInterrupts(new InterruptHandlerFunction() {
@@ -48,7 +48,7 @@ public class Robot extends IterativeRobot {
 					motorSpeed *= -1;
 				motor.set(motorSpeed);
 				System.out.println("upSensorInterput  countUp " + goUp + " motorSpeed " + motorSpeed);
-				
+				//System.out.println("potValue: " + pot.get());	
 			}
 			
 		});
@@ -64,6 +64,7 @@ public class Robot extends IterativeRobot {
 					motorSpeed *= -1;
 				motor.set(motorSpeed);
 				System.out.println("downSensorInterput  countDown " + goDown + " motorSpeed " + motorSpeed);
+				//System.out.println("potValue: " + pot.get());
 				
 			}
 			
@@ -91,9 +92,6 @@ public class Robot extends IterativeRobot {
 	/**
 	 * This function is called periodically during operator control
 	 */
-	public void teleopPeriodic() {
-
-	}
 
 	/**
 	 * This function is called periodically during test mode
@@ -104,14 +102,12 @@ public class Robot extends IterativeRobot {
 		// goDown = downSensor.get();
 		try {
 			motor.set(motorSpeed);
-			System.out.println("Pot value =" + pot.get());
+			System.out.println("potValue" + pot.get());
 		} catch (RuntimeException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			throw new RuntimeException();
 		}
-		Timer.delay(50);
+		Timer.delay(0.5);
 	}
-
-
 }
