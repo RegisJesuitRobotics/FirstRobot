@@ -21,7 +21,7 @@ public class Robot extends IterativeRobot {
 	final String defaultAuto = "Default";
 	final String customAuto = "My Auto";
 	String autoSelected;
-	double motorSpeed = -0.4;
+	double motorSpeed;
 	DigitalInput upSensor, downSensor;
 	double value1 = 0;
 	double value2 = 0;
@@ -29,6 +29,8 @@ public class Robot extends IterativeRobot {
 	int bart = 0;
 	public SpeedController motor;
 	public Potentiometer pot;
+	double [] intervals = {0.04168986652866695, 0.1246882843, 0.2076867022, 0.2906851201, 0.37368353790338404};
+	double deltaI = 0.025;
 	
 //plz do gud 
 	/**be
@@ -48,7 +50,8 @@ public class Robot extends IterativeRobot {
 					motorSpeed *= -1;
 				motor.set(motorSpeed);
 				System.out.println("upSensorInterput  countUp " + goUp + " motorSpeed " + motorSpeed);
-				//System.out.println("potValue: " + pot.get());	
+				System.out.println("potValue at top: " + pot.get());
+				
 			}
 			
 		});
@@ -64,13 +67,15 @@ public class Robot extends IterativeRobot {
 					motorSpeed *= -1;
 				motor.set(motorSpeed);
 				System.out.println("downSensorInterput  countDown " + goDown + " motorSpeed " + motorSpeed);
-				//System.out.println("potValue: " + pot.get());
-				
+				System.out.println("potValue at bottom: " + pot.get());
 			}
 			
 		});
 		downSensor.enableInterrupts();
 		motor = new Talon(4); // initialize the motor as a Talon on channel 0
+		if (intervals[0] - deltaI <= pot.get() <= intervals[0] + deltaI){
+			
+		}
 
 	}
 
@@ -98,6 +103,10 @@ public class Robot extends IterativeRobot {
 	 */
 	public void testPeriodic() {
 		System.out.println("In testPerioding");
+		if (pot.get() < .2 && pot.get() > .17){
+			//.2076867022
+			motorSpeed *= 0;
+		}
 		// goUp = upSensor.get();
 		// goDown = downSensor.get();
 		try {
@@ -108,6 +117,6 @@ public class Robot extends IterativeRobot {
 			e.printStackTrace();
 			throw new RuntimeException();
 		}
-		Timer.delay(0.5);
+		Timer.delay(0.1);
 	}
 }
