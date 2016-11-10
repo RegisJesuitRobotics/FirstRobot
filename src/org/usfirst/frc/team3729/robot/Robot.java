@@ -1,10 +1,13 @@
-
 package org.usfirst.frc.team3729.robot;
 
-import org.usfirst.frc.team3729.robot.commands.XboxControler;
-import org.usfirst.frc.team3729.robot.commands.robotDrive;
-
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.InterruptHandlerFunction;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -14,88 +17,106 @@ import edu.wpi.first.wpilibj.IterativeRobot;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	//final String defaultAuto = "Default";
-	//final String customAuto = "My Auto";
-	//String autoSelected;
-	//SendableChooser chooser;
-	robotDrive drive;
-	XboxControler xbox;
-	// USBCamera cam;
-
-	/**
-	 * This function is run when the robot is first started up and should be
+	boolean goUp, goDown;
+	final String defaultAuto = "Default";
+	final String customAuto = "My Auto";
+	String autoSelected;
+	double motorSpeed;
+	DigitalInput upSensor, downSensor;
+	double value1 = 0;
+	double value2 = 0;
+	int runtimes = 0;
+	int bart = 0;
+	public SpeedController motor;
+	public Potentiometer pot;
+	double [] intervals = {0.04168986652866695, 0.1246882843, 0.2076867022, 0.2906851201, 0.37368353790338404};
+	double deltaI = 0.025;
+	
+//plz do gud 
+	/**be
 	 * used for any initialization code.
 	 */
-	@Override
 	public void robotInit() {
-		//chooser = new SendableChooser();
-		//chooser.addDefault("Default Auto", defaultAuto);
-		//chooser.addObject("My Auto", customAuto);
-		//SmartDashboard.putData("Auto choices", chooser);
-		xbox = new XboxControler(0);
-		drive = new robotDrive(xbox);
-		// cam = new USBCamera();
+		pot = new AnalogPotentiometer(0,1,0);
+		
+		upSensor = new DigitalInput(8);
+		upSensor.requestInterrupts(new InterruptHandlerFunction() {
 
-	}
+			@Override
+			public void interruptFired(int interruptAssertedMask, Object param) {
+				System.out.println("upSensorInterput " + interruptAssertedMask + " prarams " + param);
+				goUp = upSensor.get();
+				if (motorSpeed > 0)
+					motorSpeed *= -1;
+				motor.set(motorSpeed);
+				System.out.println("upSensorInterput  countUp " + goUp + " motorSpeed " + motorSpeed);
+				System.out.println("potValue at top: " + pot.get());
+				
+			}
+			
+		});
+		upSensor.enableInterrupts();
+		downSensor = new DigitalInput(3);
+		downSensor.requestInterrupts(new InterruptHandlerFunction() {
 
-	/**
-	 * This autonomous (along with the chooser code above) shows how to select
-	 * between different autonomous modes using the dashboard. The sendable
-	 * chooser code works with the Java SmartDashboard. If you prefer the
-	 * LabVIEW Dashboard, remove all of the chooser code and uncomment the
-	 * getString line to get the auto name from the text box below the Gyro
-	 *
-	 * You can add additional auto modes by adding additional comparisons to the
-	 * switch structure below with additional strings. If using the
-	 * SendableChooser make sure to add them to the chooser code above as well.
-	 */
-	@Override
-	public void autonomousInit() {
-		//autoSelected = (String) chooser.getSelected();
-		// autoSelected = SmartDashboard.getString("Auto Selector",
-		// defaultAuto);
-		//System.out.println("Auto selected: " + autoSelected);
+			@Override
+			public void interruptFired(int interruptAssertedMask, Object param) {
+				System.out.println("downSensorInterput " + interruptAssertedMask + " prarams " + param);
+				goDown = downSensor.get();
+				if (motorSpeed < 0)
+					motorSpeed *= -1;
+				motor.set(motorSpeed);
+				System.out.println("downSensorInterput  countDown " + goDown + " motorSpeed " + motorSpeed);
+				System.out.println("potValue at bottom: " + pot.get());
+			}
+			
+		});
+		downSensor.enableInterrupts();
+		motor = new Talon(4); // initialize the motor as a Talon on channel 0
+		if (intervals[0] - deltaI <= pot.get() <= intervals[0] + deltaI){
+			
+		}
+
 	}
 
 	/**
 	 * This function is called periodically during autonomous
 	 */
-	@Override
 	public void autonomousPeriodic() {
-		//switch (autoSelected) {
-		//case customAuto:
+		switch (autoSelected) {
+		case customAuto:
 			// Put custom auto code here
-//			break;
-//		case defaultAuto:
-//		default:
-//			Talon RightMotor, LeftMotor;
-//
-//			RightMotor = new Talon(1);
-//			LeftMotor = new Talon(2);
-//
-//			RightMotor.set(.5);
-//			LeftMotor.set(.5);
-//			break;
-		//}
-}
+			break;
+		case defaultAuto:
+		default:
+			// Put default auto code here
+			break;
+		}
+	}
 
 	/**
 	 * This function is called periodically during operator control
 	 */
-	@Override
-	public void teleopPeriodic() {
-
-		drive.arcadeDrive();
-		drive.mechenumDrive();
-
-	}
 
 	/**
 	 * This function is called periodically during test mode
 	 */
-	@Override
 	public void testPeriodic() {
-
+		System.out.println("In testPerioding");
+		if (pot.get() < .2 && pot.get() > .17){
+			//.2076867022
+			motorSpeed *= 0;
+		}
+		// goUp = upSensor.get();
+		// goDown = downSensor.get();
+		try {
+			motor.set(motorSpeed);
+			System.out.println("potValue" + pot.get());
+		} catch (RuntimeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new RuntimeException();
+		}
+		Timer.delay(0.1);
 	}
-
 }
