@@ -1,6 +1,5 @@
 package org.usfirst.frc.team3729.robot.commands;
 
-import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Talon;
 
 public class robotDrive {
@@ -19,7 +18,7 @@ public class robotDrive {
 
 		// This limits the power of the motor, it is a percentage
 		// This SHOULD NOT go above 1.0, not should it be negative
-		double motorLimiterRatioinital = .5;
+		double motorLimiterRatioinital = 1; // change to
 		double motorLimiterRatio = motorLimiterRatioinital;
 		double forwardInput = _xbox.GetForwardInput();
 		double turnInput = _xbox.GetTurnInput();
@@ -75,6 +74,7 @@ public class robotDrive {
 			System.out.println("move backwards");
 			// Move Backwards
 		}
+		// Speed Switch
 		if (_xbox.GetRightTrigger() > deadZone) {
 			motorLimiterRatio += (_xbox.GetRightTrigger() * .5);
 		} else {
@@ -92,21 +92,31 @@ public class robotDrive {
 		boolean leftInput = _xbox.GetLeftBumper();
 		boolean rightInput = _xbox.GetRightBumper();
 
-		if (leftInput == true) {	//Test to finish mech Drive. Git Good!!! Lel
-			RightMotor1.set(0.5);
-			RightMotor2.set(0.5);
-			LeftMotor1.set(-0.5);
-			LeftMotor2.set(-0.5);
-		} else if (rightInput == true) {
-			RightMotor1.set(-0.5);
-			RightMotor2.set(-0.5);
-			LeftMotor1.set(0.5);
-			LeftMotor2.set(0.5);
+		// Maybe lower this
+		double motorLimiterRatioinital = 0.7;
+
+		double motorLimiterRatio = motorLimiterRatioinital;
+		double deadZone = 0.2;
+		double leftMotorInput = 1;
+		double rightMotorInput = 1;
+
+		// speed button
+		if (_xbox.GetRightTrigger() > deadZone) {
+			motorLimiterRatio = 0.4;
 		} else {
-			RightMotor1.set(0);
-			RightMotor2.set(0);
-			LeftMotor1.set(0);
-			LeftMotor2.set(0);
+			motorLimiterRatio = motorLimiterRatioinital;
+		}
+
+		if (leftInput == true) {
+			RightMotor1.set(-rightMotorInput * motorLimiterRatio);
+			LeftMotor1.set(-leftMotorInput * motorLimiterRatio);
+			RightMotor2.set(rightMotorInput * motorLimiterRatio);
+			LeftMotor2.set(leftMotorInput * motorLimiterRatio);
+		} else if (rightInput == true) {
+			RightMotor1.set(rightMotorInput * motorLimiterRatio);
+			LeftMotor1.set(leftMotorInput * motorLimiterRatio);
+			RightMotor2.set(-rightMotorInput * motorLimiterRatio);
+			LeftMotor2.set(-leftMotorInput * motorLimiterRatio);
 		}
 
 	}
