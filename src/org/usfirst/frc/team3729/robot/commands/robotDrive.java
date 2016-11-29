@@ -76,7 +76,7 @@ public class robotDrive {
 		}
 		// Speed Switch
 		if (_xbox.GetRightTrigger() > deadZone) {
-			motorLimiterRatio += (_xbox.GetRightTrigger() * .5);
+			motorLimiterRatio = (_xbox.GetRightTrigger() * 0.5);
 		} else {
 			motorLimiterRatio = motorLimiterRatioinital;
 		}
@@ -93,7 +93,7 @@ public class robotDrive {
 		boolean rightInput = _xbox.GetRightBumper();
 
 		// Maybe lower this
-		double motorLimiterRatioinital = 0.7;
+		double motorLimiterRatioinital = 0.8;
 
 		double motorLimiterRatio = motorLimiterRatioinital;
 		double deadZone = 0.2;
@@ -108,15 +108,17 @@ public class robotDrive {
 		}
 
 		if (leftInput == true) {
-			RightMotor1.set(-rightMotorInput * motorLimiterRatio);
-			LeftMotor1.set(-leftMotorInput * motorLimiterRatio);
-			RightMotor2.set(rightMotorInput * motorLimiterRatio);
-			LeftMotor2.set(leftMotorInput * motorLimiterRatio);
-		} else if (rightInput == true) {
 			RightMotor1.set(rightMotorInput * motorLimiterRatio);
 			LeftMotor1.set(leftMotorInput * motorLimiterRatio);
 			RightMotor2.set(-rightMotorInput * motorLimiterRatio);
 			LeftMotor2.set(-leftMotorInput * motorLimiterRatio);
+
+		} else if (rightInput == true) {
+
+			RightMotor1.set(-rightMotorInput * motorLimiterRatio);
+			LeftMotor1.set(-leftMotorInput * motorLimiterRatio);
+			RightMotor2.set(rightMotorInput * motorLimiterRatio);
+			LeftMotor2.set(leftMotorInput * motorLimiterRatio);
 		}
 
 	}
