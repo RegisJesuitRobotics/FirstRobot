@@ -7,10 +7,10 @@ public class robotDrive {
 	XboxControler _xbox;
 
 	public robotDrive(XboxControler xbox) {
-		RightMotor1 = new Talon(2);
-		RightMotor2 = new Talon(3);
-		LeftMotor1 = new Talon(1);
-		LeftMotor2 = new Talon(0);
+		RightMotor1 = new Talon(1);
+		RightMotor2 = new Talon(0);
+		LeftMotor1 = new Talon(2);
+		LeftMotor2 = new Talon(3      );
 		this._xbox = xbox;
 	}
 

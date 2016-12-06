@@ -70,7 +70,7 @@ public class Robot extends IterativeRobot {
 		// default:
 		// Talon RightMotor, LeftMotor;
 		//
-		// RightMotor = new Talon(1);
+		//RightMotor = new Talon(1);
 		// LeftMotor = new Talon(2);
 		//
 		// RightMotor.set(.5);
