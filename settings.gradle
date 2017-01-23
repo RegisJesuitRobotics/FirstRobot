@@ -1,0 +1,15 @@
+// ./settings.gradle
+// This file enumerates all of the projects that Gradle will build
+
+// A consolidated place for documentation to easily keep track of things from the IDE
+include 'docs'
+
+// Common projects
+include 'projects:common:edu.wpi.first.wpilibj' //FIXME: Can we download dependencies from jcenter/maven?
+    //FIXME: NetworkTables classes already appear to be captured in previous project
+include 'projects:common:edu.wpi.first.wpilibj.NetworkTables' //FIXME: Can we download dependencies from jcenter/maven?
+include 'projects:common:edu.wpi.cscore'
+include 'projects:common:org.opencv'
+
+// Only one team for now, but there may be more as time goes by
+include 'projects:team:team3729'

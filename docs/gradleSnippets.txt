@@ -1,0 +1,10 @@
+// Just some code snippets that may be useful in the future.
+
+/*Put this in a common project's build.gradle file if you need to save
+    a dependency that is in the libs directory (not commonly needed) */
+// This allows other projects to package <WPILIB.jar> into its own .jar file
+jar {
+    from("$projectDir") {
+        include 'libs/**'
+    }
+}

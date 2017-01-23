@@ -1,0 +1,12 @@
+// ./projects/common/org.opencv
+
+apply plugin: 'java'
+
+// FIXME: 2017-01-29: Determine where the current version of opencv came from.
+//   It appears to be an old version.  this version is 129KB while the latest
+//    3.2.0-vc14 version is 359KB.
+
+// This allows other projects that import this project to compile with WPILib.jar
+dependencies {
+    compile fileTree(dir: 'libs', include: '*.jar')
+}

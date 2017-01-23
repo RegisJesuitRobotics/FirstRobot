@@ -1,0 +1,25 @@
+// ./projects/team/team3729
+
+apply plugin: 'java'
+
+dependencies {
+    compile project(':projects:common:edu.wpi.cscore')
+    compile project(':projects:common:edu.wpi.first.wpilibj')
+    compile project(':projects:common:edu.wpi.first.wpilibj.NetworkTables')
+    compile project(':projects:common:org.opencv')
+}
+
+// Extend the jar task to include the packages made available by other projects
+//   This is not normally needed when packaging a .jar
+jar {
+    description += " Also adds jars from projects exporting copied jars."
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+
+    manifest {
+        attributes("Implementation-Title": "Regis Jesuit Robotics team 3729",
+                   "Implementation-Version": "0.0.1-prototype")
+    }
+}
+
+
+

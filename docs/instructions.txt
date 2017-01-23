@@ -1,0 +1,40 @@
+Download java 8 jdk
+Install to a local machine
+set JAVA_HOME environment variable to root directory of java 8 jdk
+
+Download Eclipse Neon
+configure Eclipse to run with a JDK
+    (More instructions here http://www.matsim.org/docs/devguide/eclipse/jdk)
+    i.e.
+    in eclipse.ini
+        -vm
+        C:\dev\install\java\jdk\jdk1.8.0_121\bin\javaw.exe
+        -vmargs
+Open eclipse and configure it to use the java8 jdk as the jre
+    Window->Preferences->Java->Installed JREs
+        Click Add
+            Add the JDK installed on your machine instead of the JRE
+        Select the checkbox next to the JDK after it is added
+Open eclipse and go to marketplace
+  Install the following plugins:
+  JaCoCo, PMD, Findbugs, Checkstyle, Gradle IDE Pack
+To import projects:
+    Open Eclipse
+    File->Import
+    Gradle (STS) Project
+    Navigate to root of Git repository
+    Click Build model
+    Select projects you wish to import (or click 'Select All' for everything)
+    Click 'Select Required' to import dependencies automatically
+    Click finish
+From Eclipse
+    Click Window->Show View->Other
+    Select Gradle Tasks
+    To run a build from Eclipse:
+        Select the 'Gradle Tasks' tab and select the 'Project' you want from the drop down
+        double click build
+        double click clean if you need to clean out the 'build' directory
+
+To run a build with Gradle from command line
+cd to the root of the git repostory and run ./gradlew build
+
