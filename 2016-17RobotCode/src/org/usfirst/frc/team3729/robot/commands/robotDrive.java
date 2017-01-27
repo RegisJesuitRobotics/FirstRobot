@@ -10,7 +10,7 @@ public class robotDrive {
 		RightMotor1 = new Talon(1);
 		RightMotor2 = new Talon(0);
 		LeftMotor1 = new Talon(2);
-		LeftMotor2 = new Talon(3      );
+		LeftMotor2 = new Talon(3);
 		this._xbox = xbox;
 	}
 
@@ -87,6 +87,13 @@ public class robotDrive {
 		// System.out.println(leftMotorInput + "left");
 		// System.out.println(rightMotorInput + "right");
 	}
+	
+	
+	
+	
+	
+	
+	
 
 	public void mechenumDrive() {
 		boolean leftInput = _xbox.GetLeftBumper();
