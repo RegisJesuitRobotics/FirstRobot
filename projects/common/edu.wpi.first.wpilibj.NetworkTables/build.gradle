@@ -1,0 +1,11 @@
+// ./projects/common/edu.wpi.first.wpilibj.NetworkTables
+
+apply plugin: 'java'
+
+// FIXME: Classes from NetworkTables.jar already appears to be included in
+//        the project projects/common/edu.wpi.first.wpilibj
+
+// This allows other projects that import this project to compile with WPILib.jar
+dependencies {
+    compile fileTree(dir: 'libs', include: '*.jar')
+}

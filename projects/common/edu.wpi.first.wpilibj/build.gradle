@@ -1,0 +1,8 @@
+// ./projects/common/edu.wpi.first.wpilibj
+
+apply plugin: 'java'
+
+// This allows other projects that import this project to compile with WPILib.jar
+dependencies {
+    compile fileTree(dir: 'libs', include: '*.jar')
+}

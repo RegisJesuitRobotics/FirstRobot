@@ -1,0 +1,20 @@
+Here is a list of things that need done for the project:
+
+# Make sure that the logic from the following files are integrated
+#   with Gradle and then removed
+  projects/team/team3729/build.properties
+  projects/team/team3729/build.xml
+
+
+
+For the common projects (cscore, wpilib, networktables): try to find
+ a way to download them from maven central or jcenter and/or grab the
+ source code and compile it locally or make it available for debugging
+ Also, post some links to their webpages and how to update the .jars that
+ we have locally.
+
+Document how to set up developer environments
+
+Create a Gradle task to automatically deploy the .jar file to the robot
+
+

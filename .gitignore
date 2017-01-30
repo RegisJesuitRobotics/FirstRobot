@@ -1,0 +1,23 @@
+# Root .gitignore file that will apply to all subdirectories
+#   These setting can be overriden by .gitignore files in subdirs
+
+# Temp files created by various editors
+*~
+*.swp
+*.swo
+*.bak
+
+# Artifacts created by Eclipse
+# no need to version control the following 95% of the time:
+#    .classpath
+#    .project
+bin/
+.classpath
+.project
+.settings/
+
+# Artifacts created by Gradle
+build/
+gradle-app.setting
+.gradle/
+

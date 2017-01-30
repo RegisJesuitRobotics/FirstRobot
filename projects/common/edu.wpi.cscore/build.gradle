@@ -1,0 +1,12 @@
+// ./projects/common/edu.wpi.cscore
+
+// FIXME: document where this jar came from so it can be
+//    found again.  It doesn't appear to come from jcenter/maven.
+// https://github.com/wpilibsuite/cscore
+
+apply plugin: 'java'
+
+// This allows other projects that import this project to compile with WPILib.jar
+dependencies {
+    compile fileTree(dir: 'libs', include: '*.jar')
+}
